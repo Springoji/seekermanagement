@@ -1,1 +1,36 @@
-services: {}
+version: '3.8'
+
+services:
+  # MongoDB Local Service (Optional - if you want local backup)
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb_container
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - usermanagement_network
+
+  # Spring Boot Application
+  app:
+    build: .
+    container_name: usermanagement_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb+srv://Dileep:<db_password>@cluster0.lroeupn.mongodb.net/usermanagement?retryWrites=true&w=majority
+    depends_on:
+      - mongodb
+    networks:
+      - usermanagement_network
+
+volumes:
+  mongodb_data:
+
+networks:
+  usermanagement_network:
+    driver: bridge
