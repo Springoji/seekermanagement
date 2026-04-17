@@ -22,7 +22,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb+srv://Dileep:<db_password>@cluster0.lroeupn.mongodb.net/usermanagement?retryWrites=true&w=majority
+      SPRING_DATA_MONGODB_URI: mongodb+srv://Dileep:Dileep%40080596@cluster0.lroeupn.mongodb.net/usermanagement?retryWrites=true&w=majority
     depends_on:
       - mongodb
     networks:
