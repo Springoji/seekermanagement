@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+container-def.json
+create_trust.py
+trust-policy.json
