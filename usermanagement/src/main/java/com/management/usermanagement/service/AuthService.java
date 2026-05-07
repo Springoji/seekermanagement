@@ -83,4 +83,30 @@ public class AuthService {
     public Optional<User> getUserById(String id) {
         return userRepository.findById(id);
     }
+
+    /**
+     * Register or update a user that logs in via OAuth2 provider
+     */
+    public User registerOAuthUser(String email, String fullName, String provider) {
+        Optional<User> existing = userRepository.findByEmail(email);
+        if (existing.isPresent()) {
+            User u = existing.get();
+            // update full name if missing
+            if ((u.getFullName() == null || u.getFullName().isEmpty()) && fullName != null) {
+                u.setFullName(fullName);
+                userRepository.save(u);
+            }
+            return u;
+        }
+
+        User user = new User();
+        user.setEmail(email);
+        user.setFullName(fullName != null ? fullName : email);
+        user.setRole("USER");
+        user.setActive(true);
+        user.setProvider(provider);
+        user.setCreatedAt(System.currentTimeMillis());
+
+        return userRepository.save(user);
+    }
 }

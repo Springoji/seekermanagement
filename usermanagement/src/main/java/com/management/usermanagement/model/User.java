@@ -21,4 +21,5 @@ public class User {
     private String role;
     private boolean active;
     private long createdAt;
+    private String provider;
 }
